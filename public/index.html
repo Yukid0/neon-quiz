@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Quiz - Futuriste</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="border-b border-neon-pink py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-3xl neon-text font-bold animate__animated animate__fadeIn">NEON<span class="text-neon-pink">QUIZ</span></h1>
+            <button id="adminToggle" class="neon-btn admin-btn px-6 py-2 rounded-full font-bold">ADMIN</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Quiz Dashboard -->
+        <div id="quizDashboard" class="animate__animated animate__fadeIn">
+            <div class="neon-box rounded-xl p-8 mb-8">
+                <h2 class="text-2xl neon-text font-bold mb-6">Bienvenue sur NeonQuiz</h2>
+                <p class="mb-6">Testez vos connaissances avec notre quiz futuriste ! Choisissez le nombre de questions et préparez-vous pour le défi.</p>
+                
+                <div class="mb-6">
+                    <label for="questionCount" class="block mb-2 neon-text">Nombre de questions :</label>
+                    <div class="flex items-center">
+                        <button id="decreaseQuestions" class="neon-btn w-10 h-10 rounded-full flex items-center justify-center">-</button>
+                        <input type="number" id="questionCount" min="5" max="20" value="10" class="mx-4 text-center bg-transparent border-b-2 border-neon-blue focus:outline-none w-16 text-white">
+                        <button id="increaseQuestions" class="neon-btn w-10 h-10 rounded-full flex items-center justify-center">+</button>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button id="startQuizBtn" class="neon-btn px-8 py-3 rounded-full font-bold text-lg">COMMENCER LE QUIZ</button>
+                    <button id="highScoresBtn" class="neon-btn admin-btn px-8 py-3 rounded-full font-bold text-lg">TOP SCORES</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="neon-box rounded-xl p-6">
+                    <h3 class="text-xl neon-text font-bold mb-3">Nouveautés</h3>
+                    <p class="text-gray-300">Ajout de 50 nouvelles questions sur l'espace et la technologie.</p>
+                </div>
+                <div class="neon-box rounded-xl p-6">
+                    <h3 class="text-xl neon-text font-bold mb-3">Statistiques</h3>
+                    <p class="text-gray-300">Plus de 10,000 joueurs ce mois-ci !</p>
+                </div>
+                <div class="neon-box rounded-xl p-6">
+                    <h3 class="text-xl neon-text font-bold mb-3">Prochainement</h3>
+                    <p class="text-gray-300">Mode multijoueur en développement.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Area (Hidden by default) -->
+        <div id="quizArea" class="hidden animate__animated animate__fadeIn">
+            <div class="neon-box rounded-xl p-8 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <span id="currentQuestion" class="neon-text font-bold">Question 1</span>
+                        <span id="totalQuestions" class="text-gray-400">/10</span>
+                    </div>
+                    <div class="w-full max-w-xs">
+                        <div id="progressBar" class="progress-bar rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <h2 id="questionText" class="text-2xl neon-text font-bold mb-8"></h2>
+                
+                <div id="optionsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="flex justify-between">
+                    <button id="nextQuestionBtn" class="neon-btn px-6 py-2 rounded-full font-bold hidden">QUESTION SUIVANTE</button>
+                    <span id="timer" class="neon-text font-bold text-xl">30s</span>
+                    <button id="quitQuizBtn" class="neon-btn admin-btn px-6 py-2 rounded-full font-bold">QUITTER</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen (Hidden by default) -->
+        <div id="resultsScreen" class="hidden animate__animated animate__fadeIn">
+            <div class="neon-box rounded-xl p-8 mb-8 text-center">
+                <h2 class="text-3xl neon-text font-bold mb-6">RÉSULTATS</h2>
+                <div class="text-5xl neon-text font-bold mb-8">
+                    <span id="finalScore" class="animate__animated animate__pulse animate__infinite">0</span> /
+                    <span id="totalPossible">10</span>
+                </div>
+                <div id="scoreMessage" class="text-xl mb-8"></div>
+                <div class="flex justify-center gap-4">
+                    <button id="retryQuizBtn" class="neon-btn px-6 py-2 rounded-full font-bold">REESSAYER</button>
+                    <button id="backToDashboardBtn" class="neon-btn admin-btn px-6 py-2 rounded-full font-bold">ACCUEIL</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Scores Screen (Hidden by default) -->
+        <div id="highScoresScreen" class="hidden animate__animated animate__fadeIn">
+            <div class="neon-box rounded-xl p-8 mb-8">
+                <h2 class="text-3xl neon-text font-bold mb-6 text-center">TOP SCORES</h2>
+                <div id="highScoresList" class="space-y-4">
+                    <!-- High scores will be inserted here by JavaScript -->
+                </div>
+                <div class="mt-8 flex justify-center">
+                    <button id="backFromHighScoresBtn" class="neon-btn px-6 py-2 rounded-full font-bold">RETOUR</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel (Hidden by default) -->
+        <div id="adminPanel" class="hidden animate__animated animate__fadeIn">
+            <div class="neon-box rounded-xl p-8 mb-8">
+                <h2 class="text-3xl neon-text font-bold mb-6">PANEL ADMIN</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl neon-text font-bold mb-4">Ajouter une question</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block neon-text mb-2">Question :</label>
+                                <input id="adminQuestion" type="text" class="w-full bg-transparent border-b-2 border-neon-blue focus:outline-none text-white p-2">
+                            </div>
+                            <div>
+                                <label class="block neon-text mb-2">Options (séparées par des virgules) :</label>
+                                <input id="adminOptions" type="text" class="w-full bg-transparent border-b-2 border-neon-blue focus:outline-none text-white p-2">
+                            </div>
+                            <div>
+                                <label class="block neon-text mb-2">Réponse correcte (numéro) :</label>
+                                <input id="adminCorrectAnswer" type="number" min="1" max="4" class="w-full bg-transparent border-b-2 border-neon-blue focus:outline-none text-white p-2">
+                            </div>
+                            <button id="addQuestionBtn" class="neon-btn px-6 py-2 rounded-full font-bold w-full">
+                                AJOUTER QUESTION
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl neon-text font-bold mb-4">Base de données</h3>
+                        <div class="mb-4">
+                            <p class="neon-text">Nombre de questions : <span id="questionCountDb" class="font-bold">0</span></p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block neon-text mb-2">Rechercher :</label>
+                            <input id="searchQuestion" type="text" class="w-full bg-transparent border-b-2 border-neon-blue focus:outline-none text-white p-2 mb-4">
+                        </div>
+                        <div id="questionListContainer" class="max-h-60 overflow-y-auto">
+                            <!-- Questions list will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl neon-text font-bold mb-4">Importer des questions</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <input type="file" id="jsonFileInput" accept=".json" class="hidden">
+                            <button id="importFileBtn" class="neon-btn px-6 py-2 rounded-full font-bold mr-2">
+                                SÉLECTIONNER FICHIER
+                            </button>
+                            <span id="selectedFileName" class="text-gray-300">Aucun fichier sélectionné</span>
+                        </div>
+                        <button id="importQuestionsBtn" class="neon-btn px-6 py-2 rounded-full font-bold w-full" disabled>
+                            IMPORTER QUESTIONS
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between">
+                    <button id="exportQuestionsBtn" class="neon-btn px-6 py-2 rounded-full font-bold">
+                        EXPORTER BASE DE DONNÉES
+                    </button>
+                    <button id="backFromAdminBtn" class="neon-btn admin-btn px-6 py-2 rounded-full font-bold">
+                        RETOUR AU QUIZ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neon-pink py-6 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="neon-text">© 2023 NeonQuiz - Testez vos connaissances dans un univers futuriste</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html> 

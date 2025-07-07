@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+:root {
+    --neon-pink: #ff00ff;
+    --neon-blue: #00f7ff;
+    --neon-purple: #9d00ff;
+    --dark-bg: #0a0a20;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: var(--dark-bg);
+    color: white;
+    overflow-x: hidden;
+}
+
+.neon-box {
+    border: 2px solid var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);
+    animation: pulse 2s infinite alternate;
+    background-color: rgba(10, 10, 32, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.neon-text {
+    text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    color: white;
+}
+
+.neon-btn {
+    background: transparent;
+    border: 2px solid var(--neon-blue);
+    color: white;
+    transition: all 0.3s;
+    text-shadow: 0 0 5px var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.neon-btn:hover {
+    background: var(--neon-blue);
+    color: var(--dark-bg);
+    box-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue);
+}
+
+.admin-btn {
+    border-color: var(--neon-purple);
+    box-shadow: 0 0 10px var(--neon-purple);
+}
+
+.admin-btn:hover {
+    background: var(--neon-purple);
+    box-shadow: 0 0 20px var(--neon-purple), 0 0 30px var(--neon-purple);
+}
+
+.question-option:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.correct {
+    background-color: rgba(0, 255, 0, 0.2) !important;
+    border-color: lime !important;
+    box-shadow: 0 0 15px lime !important;
+}
+
+.incorrect {
+    background-color: rgba(255, 0, 0, 0.2) !important;
+    border-color: red !important;
+    box-shadow: 0 0 15px red !important;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);
+    }
+    100% {
+        box-shadow: 0 0 20px var(--neon-pink), inset 0 0 20px var(--neon-pink);
+    }
+}
+
+@keyframes neonGlow {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    }
+    50% {
+        text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue);
+    }
+}
+
+.progress-bar {
+    height: 10px;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+    transition: width 0.3s;
+} 
