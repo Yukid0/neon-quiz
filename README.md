@@ -116,6 +116,3 @@ Vous pouvez exporter vos questions existantes au format JSON depuis le panel adm
 3. **Résultats** : Consultez votre score et comparez-le aux meilleurs scores
 4. **Panel Admin** : Accédez au panel administrateur pour gérer les questions
 
-## Licence
-
-Ce projet est sous licence MIT. 

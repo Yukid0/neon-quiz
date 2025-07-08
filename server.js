@@ -226,28 +226,28 @@ async function initializeDatabase() {
       // Questions par défaut
       const defaultQuestions = [
         {
-          question: "Quelle planète est surnommée 'la planète rouge'?",
-          options: ["Vénus", "Mars", "Jupiter", "Saturne"],
+          question: 'Quelle planète est surnommée \'la planète rouge\'?',
+          options: ['Vénus', 'Mars', 'Jupiter', 'Saturne'],
           correctAnswer: 1
         },
         {
-          question: "Quel langage de programmation a été créé par Brendan Eich en 1995?",
-          options: ["Python", "Java", "C++", "JavaScript"],
+          question: 'Quel langage de programmation a été créé par Brendan Eich en 1995?',
+          options: ['Python', 'Java', 'C++', 'JavaScript'],
           correctAnswer: 3
         },
         {
-          question: "Quelle est la plus grande lune de Saturne?",
-          options: ["Europe", "Titan", "Ganymède", "Callisto"],
+          question: 'Quelle est la plus grande lune de Saturne?',
+          options: ['Europe', 'Titan', 'Ganymède', 'Callisto'],
           correctAnswer: 1
         },
         {
-          question: "Quel est l'élément chimique le plus léger?",
-          options: ["Hélium", "Hydrogène", "Lithium", "Oxygène"],
+          question: 'Quel est l\'élément chimique le plus léger?',
+          options: ['Hélium', 'Hydrogène', 'Lithium', 'Oxygène'],
           correctAnswer: 1
         },
         {
-          question: "Quelle société a développé le processeur Ryzen?",
-          options: ["Intel", "AMD", "NVIDIA", "Qualcomm"],
+          question: 'Quelle société a développé le processeur Ryzen?',
+          options: ['Intel', 'AMD', 'NVIDIA', 'Qualcomm'],
           correctAnswer: 1
         }
       ];
