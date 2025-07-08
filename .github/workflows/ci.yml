@@ -77,6 +77,13 @@ jobs:
       - run: npm ci
       - name: Check build
         run: npm run build --if-present
+      - name: Create sample config.env
+        run: |
+          echo "PORT=3000" > config.env
+          echo "DB_HOST=localhost" >> config.env
+          echo "DB_USER=root" >> config.env
+          echo "DB_PASSWORD=" >> config.env
+          echo "DB_NAME=neonquiz" >> config.env
       - name: Create build artifact
         run: |
           mkdir -p build
