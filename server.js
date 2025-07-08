@@ -16,12 +16,27 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuration de la base de données
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
-};
+let dbConfig;
+
+// Utiliser JAWSDB_URL si disponible (pour Heroku), sinon utiliser les variables d'environnement locales
+if (process.env.JAWSDB_URL) {
+  // Format: mysql://username:password@hostname:port/database
+  const url = new URL(process.env.JAWSDB_URL);
+  dbConfig = {
+    host: url.hostname,
+    user: url.username,
+    password: url.password,
+    database: url.pathname.substring(1),
+    port: url.port
+  };
+} else {
+  dbConfig = {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+  };
+}
 
 // Créer un pool de connexions
 const pool = mysql.createPool(dbConfig);
@@ -185,18 +200,26 @@ app.listen(PORT, async () => {
 // Script pour initialiser la base de données si elle n'existe pas
 async function initializeDatabase() {
   try {
-    // Créer une connexion sans spécifier de base de données
-    const tempPool = mysql.createPool({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD
-    });
+    // Sur Heroku avec JawsDB, nous n'avons pas besoin de créer la base de données
+    // car elle est déjà créée pour nous
+    let tempPool;
     
-    // Créer la base de données si elle n'existe pas
-    await tempPool.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
-    
-    // Utiliser la base de données
-    await tempPool.query(`USE ${process.env.DB_NAME}`);
+    if (process.env.JAWSDB_URL) {
+      tempPool = pool; // Utiliser le pool existant sur Heroku
+    } else {
+      // En local, créer une connexion sans spécifier de base de données
+      tempPool = mysql.createPool({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD
+      });
+      
+      // Créer la base de données si elle n'existe pas
+      await tempPool.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`);
+      
+      // Utiliser la base de données
+      await tempPool.query(`USE ${process.env.DB_NAME}`);
+    }
     
     // Créer la table des questions
     await tempPool.query(`
